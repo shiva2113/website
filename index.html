@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sorry, Friend!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #FFD3E0 0%, #FFF6F9 100%);
+      font-family: 'Comic Neue', cursive, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #D6336C;
+      user-select: none;
+      position: relative;
+    }
+    .container {
+      text-align: center;
+      max-width: 380px;
+      background: #fff0f6cc;
+      border-radius: 25px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 20px 40px rgba(214, 51, 108, 0.3);
+      animation: fadeIn 1.5s ease forwards;
+      z-index: 2;
+      position: relative;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.4rem;
+      animation: bounceIn 1s alternate ease-in-out infinite;
+    }
+    p.message {
+      font-size: 1.2rem;
+      margin: 0.5rem 0 1.5rem 0;
+      line-height: 1.4;
+      color: #9e2a53;
+    }
+    .sticker {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite ease-in-out;
+    }
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    button {
+      background: #d6336c;
+      border: none;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(214, 51, 108, 0.6);
+      transition: background 0.3s ease;
+      flex: 1 1 auto;
+      min-width: 140px;
+      user-select: none;
+    }
+    button:hover {
+      background: #a0264f;
+    }
+    #response {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #a0264f;
+      min-height: 2em;
+      margin-top: 1rem;
+      animation: fadeIn 0.7s ease forwards;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    @keyframes bounceIn {
+      0% { transform: translateY(-20px); opacity: 0; }
+      50% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-10px); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .floating-butterfly {
+      position: absolute;
+      bottom: -50px;
+      font-size: 1rem;
+      color: #f06292;
+      animation: floatUp linear forwards;
+      opacity: 0.8;
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    audio {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(214, 51, 108, 0.4);
+      outline: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="Sorry message for friend">
+    <div class="sticker" aria-hidden="true" title="Cute butterfly emoji">🦋</div>
+    <h1>I'm Sorry Muskan !</h1>
+    <p class="message">Hey, I didn’t mean to upset you. Please forgive me , Yaar m jo bhi bola bahut galat bola maaf krde mujhe aage se nhi krunga.</p>
+    <div class="button-container" role="group" aria-label="Apology options">
+      <button onclick="replyMessage('Chalo Maaf Kiya! Thank you for understanding.Unblock krde pls 🦋')">Chalo Maaf Kiya</button>
+      <button onclick="replyMessage('Yes, I was wrong. I’ll do better! 🦋 unblock kr de')">I Was Wrong</button>
+      <button onclick="replyMessage('Let’s be friends again, from the heart! 🦋')">Let’s Be Friends Again</button>
+      <button onclick="replyMessage('I promise to do better and make it right. 🦋')">Promise To Do Better</button>
+    </div>
+    <div id="response" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <audio id="background-music" controls autoplay loop muted>
+    <source src="/Users/shiva/Desktop/hm/kahe khafa aise chulbul se bulbul status lovestatus viralvideo new trending whatsappstatus.mp3" type="audio/mp3" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    function replyMessage(msg) {
+      const responseEl = document.getElementById('response');
+      responseEl.textContent = '';
+      setTimeout(() => {
+        responseEl.textContent = msg;
+      }, 100);
+      createFloatingButterflies();
+    }
+
+    function createFloatingButterflies() {
+      for (let i = 0; i < 5; i++) {
+        const butterfly = document.createElement('div');
+        butterfly.className = 'floating-butterfly';
+        butterfly.style.left = (Math.random() * 100) + 'vw';
+        butterfly.style.fontSize = (Math.random() * 18 + 10) + 'px';
+        butterfly.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        butterfly.textContent = '🦋';
+        document.body.appendChild(butterfly);
+
+        butterfly.addEventListener('animationend', () => {
+          butterfly.remove();
+        });
+      }
+    }
+
+    const audio = document.getElementById('background-music');
+    document.body.addEventListener('click', () => {
+      if (audio.muted) {
+        audio.muted = false;
+      }
+    }, { once: true });
+  </script>
+</body>
+</html>
